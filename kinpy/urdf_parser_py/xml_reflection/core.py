@@ -292,7 +292,7 @@ class Param(object):
                 XML name
     """
 
-    def __init__(self, xml_var, value_type, required=True, default=None,
+    def __init__(self, xml_var, value_type, required=False, default=None,
                  var=None):
         self.xml_var = xml_var
         if var is None:
@@ -315,7 +315,7 @@ class Param(object):
 
 
 class Attribute(Param):
-    def __init__(self, xml_var, value_type, required=True, default=None,
+    def __init__(self, xml_var, value_type, required=False, default=None,
                  var=None):
         Param.__init__(self, xml_var, value_type, required, default, var)
         self.type = 'attribute'
@@ -346,7 +346,7 @@ class Attribute(Param):
 
 
 class Element(Param):
-    def __init__(self, xml_var, value_type, required=True, default=None,
+    def __init__(self, xml_var, value_type, required=False, default=None,
                  var=None, is_raw=False):
         Param.__init__(self, xml_var, value_type, required, default, var)
         self.type = 'element'
@@ -535,11 +535,11 @@ class Reflection(object):
             except Exception as e:
                 raise ParseError(e, path) # get_element_path(element)
 
-        if is_final:
-            for xml_var in info.attributes:
-                on_error('Unknown attribute "{}" in {}'.format(xml_var, path))
-            for node in info.children:
-                on_error('Unknown tag "{}" in {}'.format(node.tag, path))
+        # if is_final:
+        #     for xml_var in info.attributes:
+        #         on_error('Unknown attribute "{}" in {}'.format(xml_var, path))
+        #     for node in info.children:
+        #         on_error('Unknown tag "{}" in {}'.format(node.tag, path))
         # Allow children parsers to adopt this current path (if modified with id_var)
         return path
 
